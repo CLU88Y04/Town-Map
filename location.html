@@ -1,0 +1,96 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Location Info</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            padding: 20px;
+        }
+
+        .back {
+            background: #ddd;
+            padding: 8px 12px;
+            display: inline-block;
+            margin-bottom: 15px;
+            border-radius: 4px;
+            text-decoration: none;
+            color: black;
+        }
+
+        .media img, .media video {
+            max-width: 100%;
+            margin: 10px 0;
+            border-radius: 6px;
+        }
+
+        .media {
+            margin-top: 20px;
+        }
+    </style>
+</head>
+<body>
+
+<a class="back" href="index.html">&larr; Back to Map</a>
+
+<h1 id="name"></h1>
+<p id="description"></p>
+
+<div class="media" id="media"></div>
+
+<script src="data.js"></script>
+
+<script>
+    // Get the 'id' parameter from the URL
+    const params = new URLSearchParams(window.location.search);
+    const id = parseInt(params.get("id"));
+
+    if (!id) {
+        document.getElementById("name").textContent = "Location not found";
+        throw new Error("No ID in URL");
+    }
+
+    // Make sure 'locations' exists from data.js
+    if (!Array.isArray(locations)) {
+        document.getElementById("name").textContent = "Locations data not loaded";
+        throw new Error("Locations array missing in data.js");
+    }
+
+    // Find the location with this ID
+    const locationData = locations.find(loc => loc.id === id);
+
+    if (!locationData) {
+        document.getElementById("name").textContent = "Location not found";
+    } else {
+        document.getElementById("name").textContent = locationData.name;
+        document.getElementById("description").textContent = locationData.description;
+
+        const mediaDiv = document.getElementById("media");
+
+        // Display images
+        if (locationData.images && locationData.images.length) {
+            locationData.images.forEach(imgPath => {
+                const img = document.createElement("img");
+                img.src = imgPath;
+                img.alt = locationData.name;
+                mediaDiv.appendChild(img);
+            });
+        }
+
+        // Display videos
+        if (locationData.videos && locationData.videos.length) {
+            locationData.videos.forEach(videoPath => {
+                const video = document.createElement("video");
+                video.controls = true;
+                video.width = 640;       // set a width
+                video.height = 360;      // optional height
+                video.src = videoPath;
+                video.type = "video/mp4"; // ensures browser knows it's mp4
+                mediaDiv.appendChild(video);
+            });
+        }
+    }
+</script>
+
+</body>
+</html>

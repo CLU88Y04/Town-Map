@@ -1,0 +1,62 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Town Map</title>
+
+    <!-- Leaflet CSS -->
+    <link rel="stylesheet" href="https://unpkg.com/leaflet/dist/leaflet.css" />
+
+    <style>
+        body {
+            margin: 0;
+            font-family: Arial, sans-serif;
+        }
+        #map {
+            height: 100vh;
+            width: 100%;
+        }
+    </style>
+</head>
+<body>
+
+<div id="map"></div>
+
+<!-- Leaflet JS -->
+<script src="https://unpkg.com/leaflet/dist/leaflet.js"></script>
+
+<!-- Location Data -->
+<script src="data.js"></script>
+
+<script>
+    // Create the map with a fallback location
+    const map = L.map('map').setView([38.578558, -121.506896], 16);
+
+    // Base layer
+    L.tileLayer('https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png', {
+        maxZoom: 19
+    }).addTo(map);
+
+    const bounds = [];
+
+    // Add all pins from data.js
+    locations.forEach(loc => {
+        const marker = L.marker([loc.lat, loc.lng]).addTo(map);
+        bounds.push([loc.lat, loc.lng]);
+
+        marker.bindPopup(`
+            <b>${loc.name}</b><br>
+            <a href="location.html?id=${loc.id}">View Details</a>
+        `);
+    });
+
+    // Auto-zoom to show all markers (overrides default if pins exist)
+    if (bounds.length > 0) {
+        map.fitBounds(bounds, {
+            padding: [40, 40],
+            maxZoom: 15
+        });
+    }
+</script>
+
+</body>
+</html>
