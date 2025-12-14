@@ -10,8 +10,8 @@ const locations = [
       "images/EffieYeawNatureCenter.jpg"
     ],
     videos: [
-      "videos/Test1.mp4",
-      "videos/Test2.mp4"
+      "videos/Video4.mp4",
+      "videos/Video5.mp4"
     ]
   },
   {
