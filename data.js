@@ -48,11 +48,11 @@ const locations = [
     description: "More More More Walking Trails",
      images: [],
     videos: [
-      "videos/Video2PartA.mp4",
-      "videos/Video2PartB.mp4",
-      "videos/Video2PartC.mp4",
-      "videos/Video2PartD.mp4",
-      "videos/Video2PartE.mp4"
+      "videos/Video3PartA.mp4",
+      "videos/Video3PartB.mp4",
+      "videos/Video3PartC.mp4",
+      "videos/Video3PartD.mp4",
+      "videos/Video3PartE.mp4"
     ]
   }
 ];
